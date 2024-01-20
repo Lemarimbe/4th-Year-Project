@@ -3,6 +3,7 @@ require('dotenv').config()
 const createMarkup = require('../utils/createMarkup');
 
 const sendMail = require('../utils/sendMail');
+const getAUser = require('../utils/getAUser');
 
 async function registerUser(req, res){
     let user = req.body;
@@ -30,6 +31,18 @@ async function registerUser(req, res){
         console.log(error)
     }
 
+}
+
+async function login(req, res){
+   let { username, password} = req.body;
+   const { pool }  = req;
+
+   try {
+    let user = await getAUser(username, pool)
+    
+   } catch (error) {
+    
+   }
 }
 
 module.exports = {
