@@ -1,6 +1,7 @@
 const { newUserValidator } = require('../validators/newUserValidator');
 function newUserMiddleware(req, res, next) {
     let user = req.body;
+    console.log(user)
     try {
         let { value } = newUserValidator(user);
        

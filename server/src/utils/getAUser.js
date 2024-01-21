@@ -6,9 +6,9 @@ async function getAUser(Username, pool) {
             .input("inputUsername", Username)
             .execute("GetUser")
         
-        console.log(results.recordset[0])
+        
 
-        return user
+        return results.recordset[0];
     }
 
 }

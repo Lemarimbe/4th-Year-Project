@@ -11,6 +11,7 @@ const new_user_Schema = joi
         "^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$"
       )),
     c_password: joi.ref("password"),
+    role: joi.string().min(4),
     email: joi
       .string()
       .email({ tlds: { allow: false } }).required(),

@@ -4,6 +4,8 @@ const sql = require('mssql');
 const config = require('./src/config/config');
 
 const authRouter = require("./src/routes/authRoutes");
+const adminRouter = require('./src/routes/adminRoutes');
+const userRouter = require("./src/routes/userRoutes")
 
 const app = express();
 
@@ -36,6 +38,8 @@ async function connectToDB(){
         );
 
         app.use(authRouter)
+        app.use(adminRouter)
+        app.use(userRouter)
 
         app.use("*", (req, res, next) => {
             const error = new Error("Route Not found");
