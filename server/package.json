@@ -9,6 +9,7 @@
   "author": "Lemarimbe",
   "license": "ISC",
   "dependencies": {
+    "axios": "^1.6.5",
     "bcrypt": "^5.1.1",
     "dotenv": "^16.3.2",
     "ejs": "^3.1.9",
