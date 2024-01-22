@@ -2,6 +2,7 @@ import requests
 from django.http import JsonResponse
 from PIL import Image
 import io
+import os
 import json
 from stone import process  # Replace with actual import
 from django.views.decorators.csrf import csrf_exempt
@@ -19,8 +20,8 @@ def convert_ndarray(data):
         return [convert_ndarray(v) for v in data]
     return data
 
-@method_decorator(csrf_exempt, name='dispatch')
-def process_image(request):
+@csrf_exempt
+def process_image_view(request):
     if request.method == 'POST':
         # Get the URL of the online image from the request
         data = json.loads(request.body.decode('utf-8'))
@@ -46,12 +47,15 @@ def process_image(request):
 
                 # Convert the result to JSON
                 result_json = convert_ndarray(result)
-                print(result_json)
+                
 
                 # Remove the temporary file
-                temp_file.close()
-               
+                 # Close the image
+                image.close()
+
+                # Remove the temporary file
                 os.remove(temp_file_path)
+
 
                 return JsonResponse(result_json, safe=False)
             else:
