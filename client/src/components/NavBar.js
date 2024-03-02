@@ -15,6 +15,8 @@ const NavBar = () => {
   const [show3, setShow3] = useState(false);
   const [show4, setShow4] = useState(false);
 
+  const isLoggedIn = localStorage.getItem("token"); // Check if user is logged in
+
   const showHandler = () => {
     setShow(true);
     setShow2(false);
@@ -109,6 +111,8 @@ const NavBar = () => {
           <Link to="/cart">
             <FaShoppingBag className=" text-2xl text-right ml-10 relative left-24" />
           </Link>
+
+          {isLoggedIn ? null : <Link to="/login" className="text-2xl text-right ml-10 relative left-24">LOGIN</Link>}
         </nav>
       </header>
     </div>

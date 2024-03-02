@@ -22,6 +22,8 @@ import Under10 from "./components/Under10";
 import ForHer from "./components/ForHer";
 import ForHim from "./components/ForHim";
 import MobileNav from "./components/MobileNav";
+import Login from "./components/Login";
+import Signup from "./components/Signup";
 
 function App() {
   return (
@@ -36,6 +38,22 @@ function App() {
                 <NavBar /> <MobileNav /> <SimpleSlider /> <HeroSection />
                 <BsText /> {<Products />} {/*<OurBestSellers />*/}
                 <Ingridients /> <JournalSection /> <FollowONIG /> <SPFooter />
+              </>
+            }
+          />
+           <Route
+            path="/login" // Add a new Route element for the /login path
+            element={
+              <>
+                <Login /> {/* Render the Login component */}
+              </>
+            }
+          />
+          <Route
+            path="/signup" // Add a new Route element for the /login path
+            element={
+              <>
+                <Signup /> {/* Render the Login component */}
               </>
             }
           />
