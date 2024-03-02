@@ -2,7 +2,7 @@ const express = require('express');
 
 const userRouter = express.Router();
 
-const { getAllProducts, getProductById, getProductsByCategory, getProductsByBrand, searchProductsByName, recommendProductsBySkinTone } = require('../controllers/userControllers');
+const { getAllProducts, getProductById, getProductsByCategory, getProductsByBrand, searchProductsByName, recommendProductsBySkinTone, getSkintone } = require('../controllers/userControllers');
 
 const tokenValidateMiddleware = require("../middlewares/tokenValidateMiddleware")
 
@@ -12,5 +12,6 @@ userRouter.get("/products/category/:category", tokenValidateMiddleware, getProdu
 userRouter.get("/products/brand/:brand", tokenValidateMiddleware, getProductsByBrand);
 userRouter.get("/products/search/:term", tokenValidateMiddleware, searchProductsByName)
 userRouter.get("/recommend", tokenValidateMiddleware, recommendProductsBySkinTone)
+userRouter.post("/skin", tokenValidateMiddleware, getSkintone)
 
 module.exports = userRouter

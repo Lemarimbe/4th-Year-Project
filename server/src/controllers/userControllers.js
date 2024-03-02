@@ -165,49 +165,100 @@ async function recommendProductsBySkinTone (req, res) {
 
 }
 
-async function getSkintone(req, res){
-    let { pool } = req
-    const { colorCode } = "#E8BFAA";
+const axios = require('axios');
+
+async function getSkintone(req, res) {
+   const { image_url } = req.body
+    try {
+        let colorCode;
+        const response = await axios.post('http://127.0.0.1:8000/myapp/process-image/', {
+            image_url: image_url
+        });
+         colorCode = response.data.faces[0].dominant_colors[0].color;
+        console.log(colorCode)
+        let { pool } = req
+    
     const colorRanges = {
-        Porcelain: { from: '#F8EFEF', to: '#F5D7D7' },
-        Ivory: { from: '#F1E6D8', to: '#EACBBF' },
-        Light: { from: '#F4E2D8', to: '#EFC9BB' },
-        Beige: { from: '#EFD8C8', to: '#E8BFAA' },
-        'Light-medium': { from: '#E9D1BA', to: '#E1B59D' },
-        Sand: { from: '#E3C5AB', to: '#DBAA8F' },
-        Medium: { from: '#D9BFAE', to: '#D1A591' },
-        Neutral: { from: '#D3B19C', to: '#CB947F' },
-        Golden: { from: '#CCAC8C', to: '#C38F70' },
-        Tan: { from: '#C19D7B', to: '#B9865F' },
-        Caramel: { from: '#B5906A', to: '#AD7554' },
-        Olive: { from: '#AB8360', to: '#A26946' },
-        Deep: { from: '#9F7655', to: '#976A3A' },
-        Rich: { from: '#946B4A', to: '#8C502F' },
-        Espresso: { from: '#8B6040', to: '#834E26' },
-        Dark: { from: '#7F5130', to: '#775518' },
-        Ebony: { from: '#744724', to: '#6D3312' },
-        Mahogany: { from: '#6A3C17', to: '#62310A' },
+        Porcelain: { from: 0xF8EFEF, to: 0xF5D7D7 },
+        Ivory: { from: 0xF1E6D8, to: 0xEACBBF },
+        Light: { from: 0xF4E2D8, to: 0xEFC9BB },
+        Beige: { from: 0xEFD8C8, to: 0xE8BFAA },
+        'Light-medium': { from: 0xE9D1BA, to: 0xE1B59D },
+        Sand: { from: 0xE3C5AB, to: 0xDBAA8F },
+        Medium: { from: 0xD9BFAE, to: 0xD1A591 },
+        Neutral: { from: 0xD3B19C, to: 0xCB947F },
+        Golden: { from: 0xCCAC8C, to: 0xC38F70 },
+        Tan: { from: 0xC19D7B, to: 0xB9865F },
+        Caramel: { from: 0xB5906A, to: 0xAD7554 },
+        Olive: { from: 0xAB8360, to: 0xA10000 },
+        Deep: { from: 0x9F7655, to: 0x976A3A },
+        Rich: { from: 0x946B4A, to: 0x8C502F },
+        Espresso: { from: 0x8B6040, to: 0x834E26 },
+        Dark: { from: 0x7F5130, to: 0x775518 },
+        Ebony: { from: 0x744724, to: 0x6D3312 },
+        Mahogany: { from: 0x6A3C17, to: 0x62310A },
     };
 
     let category = 'Unknown';
-    for (const [key, value] of Object.entries(colorRanges)) {
-        const from = parseInt(value.from.substring(1), 16);
-        const to = parseInt(value.to.substring(1), 16);
-        const color = parseInt(colorCode.substring(1), 16);
+    const color = parseInt(colorCode.substring(1), 16);
 
-        if (color >= from && color <= to) {
+    for (const [key, value] of Object.entries(colorRanges)) {
+        const from = value.from;
+        const to = value.to;
+
+        
+
+        if (color <= from && color >= to) {
             category = key;
             break;
         }
     }
 
-    res.json({ category });
+    
+
+    if(category !== 'Unknown'){
+        const userId = req.user.user.user_id;
+        try {
+            let results = await pool.request()
+                            .input('user_id', userId)
+                            .input('skin_tone', category)
+                            .execute('UpdateUserProfile')
+       
+
+        res.json( {
+            success: true,
+            message: "Skin updated",
+            category,
+            colorCode
+        });
+        } catch (error) {
+            res.send(error)
+        }
+        
+    } else {
+        res.json({
+            success: false
+        })
+    }
+   
+    } catch (error) {
+        res.send(error)
+    }
+        
+
+        
+    
 }
+
+
+
+module.exports = { getSkintone };
 module.exports = {
     getAllProducts,
     getProductById,
     getProductsByCategory,
     getProductsByBrand,
     searchProductsByName,
-    recommendProductsBySkinTone
+    recommendProductsBySkinTone,
+    getSkintone
 }

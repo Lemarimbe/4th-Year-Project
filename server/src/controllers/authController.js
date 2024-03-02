@@ -24,6 +24,7 @@ async function registerUser(req, res){
             .input("email", value.email)
             .input("password", hashed_pwd)
             .input("name", value.name)
+            .input("role", "user")
             .execute("InsertUser");
 
             if(results.rowsAffected[0] > 0){
@@ -105,7 +106,7 @@ async function registerAdmin(req, res){
             .input("email", value.email)
             .input("password", hashed_pwd)
             .input("name", value.name)
-            .input("role", value.role)
+            .input("role", "Admin")
             .execute("InsertUser");
 
             if(results.rowsAffected[0] > 0){
