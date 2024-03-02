@@ -167,7 +167,6 @@ async function recommendProductsBySkinTone(req, res) {
 
 }
 
-const axios = require('axios');
 
 async function getSkintone(req, res) {
    const { image_url } = req.body
