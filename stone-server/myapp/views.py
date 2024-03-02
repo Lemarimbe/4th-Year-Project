@@ -4,7 +4,7 @@ from PIL import Image
 import io
 import os
 import json
-from stone import process  # Replace with actual import
+from stone import process  
 from django.views.decorators.csrf import csrf_exempt
 from django.utils.decorators import method_decorator
 from json import dumps

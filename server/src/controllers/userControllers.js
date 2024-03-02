@@ -167,12 +167,14 @@ async function recommendProductsBySkinTone(req, res) {
 
 }
 
+const axios = require('axios');
+
 async function getSkintone(req, res) {
-   
+   const { image_url } = req.body
     try {
         let colorCode;
         const response = await axios.post('http://127.0.0.1:8000/myapp/process-image/', {
-            image_url: 'https://content.fortune.com/wp-content/uploads/2015/04/purdie-vaughns-photo.jpeg',  // Replace with the actual image URL
+            image_url: image_url
         });
          colorCode = response.data.faces[0].dominant_colors[0].color;
         console.log(colorCode)
@@ -190,7 +192,7 @@ async function getSkintone(req, res) {
         Golden: { from: 0xCCAC8C, to: 0xC38F70 },
         Tan: { from: 0xC19D7B, to: 0xB9865F },
         Caramel: { from: 0xB5906A, to: 0xAD7554 },
-        Olive: { from: 0xAB8360, to: 0xA26946 },
+        Olive: { from: 0xAB8360, to: 0xA10000 },
         Deep: { from: 0x9F7655, to: 0x976A3A },
         Rich: { from: 0x946B4A, to: 0x8C502F },
         Espresso: { from: 0x8B6040, to: 0x834E26 },
@@ -206,7 +208,7 @@ async function getSkintone(req, res) {
         const from = value.from;
         const to = value.to;
 
-        console.log(`Checking ${key}: color=${color}, from=${from}, to=${to}`);
+        
 
         if (color <= from && color >= to) {
             category = key;
@@ -214,8 +216,33 @@ async function getSkintone(req, res) {
         }
     }
 
-    console.log(`Final category: ${category}`);
-    res.json({ category });
+    
+
+    if(category !== 'Unknown'){
+        const userId = req.user.user.user_id;
+        try {
+            let results = await pool.request()
+                            .input('user_id', userId)
+                            .input('skin_tone', category)
+                            .execute('UpdateUserProfile')
+       
+
+        res.json( {
+            success: true,
+            message: "Skin updated",
+            category,
+            colorCode
+        });
+        } catch (error) {
+            res.send(error)
+        }
+        
+    } else {
+        res.json({
+            success: false
+        })
+    }
+   
     } catch (error) {
         res.send(error)
     }
@@ -227,7 +254,7 @@ async function getSkintone(req, res) {
 
 
 
-
+module.exports = { getSkintone };
 module.exports = {
     getAllProducts,
     getProductById,
