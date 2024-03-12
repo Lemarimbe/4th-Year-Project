@@ -24,6 +24,7 @@ import ForHim from "./components/ForHim";
 import MobileNav from "./components/MobileNav";
 import Login from "./components/Login";
 import Signup from "./components/Signup";
+import SkinTone from "./components/SkinTone";
 
 function App() {
   return (
@@ -54,6 +55,14 @@ function App() {
             element={
               <>
                 <Signup /> {/* Render the Login component */}
+              </>
+            }
+          />
+          <Route
+            path="/skintone"
+            element={
+              <>
+                <SkinTone />
               </>
             }
           />
