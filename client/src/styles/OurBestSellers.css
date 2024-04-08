@@ -1,6 +1,10 @@
-.ourBestSellersImg {
+*{
+  box-sizing: border-box;
+}
+.rounded-xl {
   width: 19rem !important;
-  object-fit: contain !important;
+  height: 30rem !important;
+  object-fit: cover !important;
 }
 
 .ourBestSellersMainParent {
@@ -12,6 +16,12 @@
   width: 104vw;
   margin-top: 3rem;
   right: -6.5rem;
+}
+
+.card-title{
+  white-space: nowrap; /* Prevent text from wrapping */
+  overflow: hidden; /* Hide overflowing text */
+  text-overflow: ellipsis; /* Add ellipsis for overflow text */
 }
 
 :root {
@@ -29,4 +39,31 @@
 
 .fof {
   font-family: Arapey, Helvetica, Arial, sans-serif;
+}
+
+@media screen and (max-width: 768px) {
+  .ourBestSellersMainParent {
+    width: 100vw;
+    gap: 1rem;
+    right: 0;
+  }
+  .rounded-xl {
+    width: 19rem !important;
+    height: 15rem !important;
+    object-fit: cover !important;
+  }
+ 
+}
+
+@media screen and (max-width: 480px) {
+  .ourBestSellersMainParent {
+    width: 100vw;
+    gap: 1rem;
+    right: 0;
+  }
+  .rounded-xl {
+    width: 19rem !important;
+    height: 15rem !important;
+    object-fit: cover !important;
+  }
 }

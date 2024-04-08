@@ -1,4 +1,5 @@
 const axios = require('axios');
+const { tokenVerifier } = require('../utils/token');
 
 async function getAllProducts(req, res) {
 
@@ -9,7 +10,7 @@ async function getAllProducts(req, res) {
         res.status(200).send({
             success: true,
             message: "Products retrieved successfully",
-            products: products.recordsets
+            products: products.recordsets[0]
         });
     } catch (error) {
         res.status(500).send({
@@ -154,7 +155,7 @@ async function recommendProductsBySkinTone(req, res) {
         res.json({
             success: true,
             message: "Recommended Products retrieved successfully",
-            data: products.recordsets
+            products: products.recordsets[0]
         })
 
     } catch (error) {
@@ -251,6 +252,36 @@ async function getSkintone(req, res) {
     
 }
 
+async function checkLogin(req, res) {
+    const { token } = req.body;
+  
+    try {
+      // Assuming you have a function to verify the token
+      const isValidToken = await tokenVerifier(token);
+      
+      if (isValidToken) {
+        // Token is valid, user is logged in
+        res.status(200).send({
+          loggedIn: true,
+          message: "User is logged in",
+        });
+      } else {
+        // Token is invalid or expired, user is not logged in
+        res.status(200).send({
+          loggedIn: false,
+          message: "User is not logged in",
+        });
+      }
+    } catch (error) {
+      console.error("Error checking login status:", error);
+      res.status(500).send({
+        loggedIn: false,
+        message: "Internal server error",
+      });
+    }
+  }
+  
+
 
 
 module.exports = { getSkintone };
@@ -261,5 +292,6 @@ module.exports = {
     getProductsByBrand,
     searchProductsByName,
     recommendProductsBySkinTone,
-    getSkintone
+    getSkintone,
+    checkLogin
 }

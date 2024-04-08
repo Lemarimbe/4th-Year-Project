@@ -1,108 +1,75 @@
-import React from "react";
+import React, {useEffect, useState} from "react";
+import axios from "axios";
 import "../styles/Navbar.css";
 import logo from "../assets/cara.png";
-import { useState } from "react";
-import BestSellers from "./BestSellers";
-import GiftSets from "./GiftSets";
-import Body from "./Body";
 import { FaShoppingBag } from "react-icons/fa";
 import { Link } from "react-router-dom";
-import { useSelector } from "react-redux";
+
 
 const NavBar = () => {
-  const [show, setShow] = useState(false);
-  const [show2, setShow2] = useState(false);
-  const [show3, setShow3] = useState(false);
-  const [show4, setShow4] = useState(false);
+ 
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  useEffect(() => {
+    const checkLoginStatus = async () => {
+      try {
+        const token = localStorage.getItem("token");
+        if (token) {
+          const response = await axios.post(
+            "http://localhost:5050/check",
+            { token }
+          );
+          console.log(response)
+          setIsLoggedIn(response.data.loggedIn);
+        } else {
+          setIsLoggedIn(false);
+        }
+      } catch (error) {
+        console.error("Error checking login status:", error);
+        setIsLoggedIn(false);
+      }
+    };
 
-  const isLoggedIn = localStorage.getItem("token"); // Check if user is logged in
+    checkLoginStatus();
+  }, []);
 
-  const showHandler = () => {
-    setShow(true);
-    setShow2(false);
-    setShow3(false);
-    setShow4(false);
-  };
-
-  const showHandler2 = () => {
-    setShow2(true);
-    setShow(false);
-    setShow3(false);
-    setShow4(false);
-  };
-
-  const showHandler3 = () => {
-    setShow3(true);
-    setShow(false);
-    setShow2(false);
-    setShow4(false);
-  };
-
-  const showHandler4 = () => {
-    setShow4(true);
-    setShow(false);
-    setShow2(false);
-    setShow3(false);
-  };
-
-  const dontShowHandler = () => {
-    setShow(false);
-    setShow2(false);
-    setShow3(false);
-    setShow4(false);
-  };
+  
 
   return (
     <div>
-      <header class="banner" role="banner">
-        <nav class="navbar" role="navigation" aria-label="menu">
+      <header className="banner" role="banner">
+        <nav className="navbar" role="navigation" aria-label="menu">
           <Link to="/">
-            <img src={logo} className=" ml-32" />
+            <img src={logo} className=" ml-32" alt="" />
           </Link>
 
-          <ul class="menuNav">
+          <ul className="menuNav">
+            <Link to={'/forhim'}>
             <li
-              class="dropdown nav-link nav-link-fade-up transition-all duration-700"
-              onMouseOver={showHandler}
+              className="dropdown nav-link nav-link-fade-up transition-all duration-700"
+              
             >
-              BEST SELLERS
-              {show && (
-                <div>
-                  <ul class="dropdown-nav" onMouseLeave={dontShowHandler}>
-                    <BestSellers> </BestSellers>
-                  </ul>
-                </div>
-              )}
+              EXPLORE
+              
             </li>
+            </Link>
+
+            <Link to={'/forher'}>
 
             <li
-              class="dropdown nav-link nav-link-fade-up"
-              onMouseOver={showHandler2}
+              className="dropdown nav-link nav-link-fade-up"
+              
             >
-              GIFT SETS
-              {show2 && (
-                <ul
-                  class="dropdown-nav dropdown-nav2"
-                  onMouseLeave={dontShowHandler}
-                >
-                  <GiftSets />
-                </ul>
-              )}
+              FOR YOU
+              
             </li>
+            </Link>
 
             <li
-              class="dropdown nav-link nav-link-fade-up"
-              onMouseOver={showHandler3}
+              className="dropdown nav-link nav-link-fade-up"
+             
             >
-              SHOP RANGE
-              {show3 && (
-                <ul
-                  class="dropdown-nav dropdown-nav3"
-                  onMouseLeave={dontShowHandler}
-                >
-                  <Body />
-                </ul>
-              )}
+              ABOUT
+              
             </li>
 
             <p className="navLine absolute bg-red-600 w-1 font-extralight h-9 z-50"></p>
@@ -112,7 +79,7 @@ const NavBar = () => {
             <FaShoppingBag className=" text-2xl text-right ml-10 relative left-24" />
           </Link>
 
-          {isLoggedIn ? null : <Link to="/login" className="text-2xl text-right ml-10 relative left-24">LOGIN</Link>}
+          {isLoggedIn ?  <Link to="/login" className="text-2xl text-right ml-10 relative left-24">LOGOUT</Link> : <Link to="/login" className="text-2xl text-right ml-10 relative left-24">LOGIN</Link>}
         </nav>
       </header>
     </div>
@@ -144,25 +111,25 @@ export default NavBar;
 
 
 
-             <div class="container">
-                <div class="dropdown" onMouseOver={showHandler}>
-                    <button class="dropbtn">Dropdown</button>
-                    <div class="dropdown-content" onMouseLeave={dontShowHandler}>
+             <div className="container">
+                <div className="dropdown" onMouseOver={showHandler}>
+                    <button className="dropbtn">Dropdown</button>
+                    <div className="dropdown-content" onMouseLeave={dontShowHandler}>
                      {show && <BestSellers /> }
                     </div>
                 </div>
 
-                <div class="dropdown" onMouseOver={showHandler2}>
-                    <button class="dropbtn">Dropdown</button>
-                    <div class="dropdown-content" onMouseLeave={dontShowHandler}>
+                <div className="dropdown" onMouseOver={showHandler2}>
+                    <button className="dropbtn">Dropdown</button>
+                    <div className="dropdown-content" onMouseLeave={dontShowHandler}>
                     {show2 && <GiftSets /> }
                     </div>
                 </div>
 
 
-                <div class="dropdown">
-                    <button class="dropbtn">Dropdown</button>
-                    <div class="dropdown-content">
+                <div className="dropdown">
+                    <button className="dropbtn">Dropdown</button>
+                    <div className="dropdown-content">
                         Link 1
                         Link 2
                         Link 3

@@ -23,7 +23,7 @@ import ForHer from "./components/ForHer";
 import ForHim from "./components/ForHim";
 import MobileNav from "./components/MobileNav";
 import Login from "./components/Login";
-import Signup from "./components/Signup";
+import SignUp from "./components/SignUp";
 import SkinTone from "./components/SkinTone";
 
 function App() {
@@ -54,18 +54,17 @@ function App() {
             path="/signup" // Add a new Route element for the /login path
             element={
               <>
-                <Signup /> {/* Render the Login component */}
+                <SignUp /> {/* Render the Login component */}
               </>
             }
           />
-          <Route
-            path="/skintone"
-            element={
-              <>
-                <SkinTone />
-              </>
-            }
-          />
+         <Route path="/skintone" element=
+          {
+            <>
+              <NavBar /> <MobileNav /> <SkinTone />
+            </>
+         
+          } />
           <Route
             path="/:id"
             exact

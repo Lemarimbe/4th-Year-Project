@@ -1,145 +1,83 @@
-.bgGrey {
+/* SinglePage.css */
+.singlePageMainParent {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+.productInfo {
   background-color: #f8f9fc;
+  border-radius: 8px;
 }
 
-.sinLih {
-  line-height: 3rem;
-  position: relative;
-  left: 1rem;
-  width: 100vw;
-  top: -8.9rem;
-  text-align: center;
-}
-
-.singlePageMainPic {
-  width: 32rem;
-  height: 35rem;
-}
-
-.singlePageMainPicHold {
-  left: 30rem;
-  top: -4rem;
-}
-
-.sideImageHold {
-  position: relative;
-  top: -39rem;
-  left: 12.5rem;
-}
-
-.bottomImgHold {
-  top: -37.5rem;
-  left: 12.5rem;
-  gap: 1rem;
-}
-
-.sp {
-  position: relative;
-  left: 7rem;
-}
-
-.namePriceSP {
-  top: -92rem;
-  left: 69rem;
+.productDetails {
   display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px;
 }
 
-.singleLinetop {
-  top: -92rem;
-  left: 64rem;
+.productImage {
+  flex: 1;
 }
 
-.starHold {
-  top: -90rem;
-  left: 71rem;
+.productDescription {
+  flex: 1;
+  padding-left: 20px;
 }
 
-.l1rem {
-  line-height: 1rem;
+
+.productName {
+  font-size: 24px;
+  font-weight: bold;
+  margin-bottom: 10px;
 }
 
-.loyalty {
-  left: 66rem;
-  top: -89rem;
-  letter-spacing: 2px;
-  font-weight: 600;
+.productPrice {
+  font-size: 20px;
+  margin-bottom: 10px;
 }
 
-.spBtnHold {
-  top: -84.5rem;
-  left: 70rem;
+
+.descriptionText {
+  font-size: 1rem;
+  line-height: 1.5;
+  color: #333;
+  padding-bottom: 1rem;
 }
 
-.spAddTOCart {
-  background-color: black;
-  width: 14rem;
-  color: white;
-  height: 3rem;
-  transition: all 400ms ease;
+.addToCartBtn {
+  background-color: #000;
+  color: #fff;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s;
 }
 
-.spAddTOCart:hover {
-  transform: scale(1.08);
+.addToCartBtn:hover {
+  background-color: #333;
 }
 
-.chakra-accordion {
-  width: 30vw;
-  position: relative;
-  top: -80rem;
-  left: 64rem;
+.productFeatures {
   display: flex;
-  flex-direction: column;
-  gap: 1rem;
+  justify-content: space-between;
+  padding: 20px;
 }
 
-.singleMainParentSlider {
-  position: relative;
-  top: -65rem;
-  box-shadow: 0px !important;
+.feature {
+  display: flex;
+  align-items: center;
 }
 
-.singleMainParentSlider2 {
-  position: absolute !important;
+.featureIcon {
+  font-size: 30px;
+  margin-right: 10px;
 }
 
-.sec {
-  top: -70rem !important;
+.featureText {
+  font-size: 20px;
 }
 
-.jsParent {
-  position: absolute;
-  top: 191rem;
-}
 
-.spText {
-  top: 66rem;
-  left: 35rem;
-}
-
-.footerFeatures2 {
-  gap: 15rem;
-  top: 233rem;
-  left: 15rem;
-}
-
-.footerFeatures2TextHold {
-  gap: 10.5rem;
-  top: 235rem;
-  left: 20rem;
-  white-space: nowrap;
-}
-
-.spfooterHold {
-  top: 243rem;
-  width: 100vw;
-}
-
-.fotBg {
-  background-color: #173f35;
-  color: white;
-  border-top: none;
-}
-
-.cartPageFooter {
-  top: 380rem !important;
-}

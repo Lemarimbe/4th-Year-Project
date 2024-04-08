@@ -1,7 +1,6 @@
 import React, { useState, useRef, useCallback } from 'react';
 import axios from 'axios';
 import Webcam from 'react-webcam';
-import "../styles/SkinTone.css";
 import { FaTimes } from 'react-icons/fa';
 
 const videoConstraints = {
@@ -82,22 +81,26 @@ const SkinTone = () => {
     };
 
     return (
-        <div className="container">
-            <h1>Upload Images to Cloudinary</h1>
-            <div className="section">
-                <label>
+        <div className="max-w-screen-md mx-auto p-4">
+            <h1 className="text-3xl font-bold mb-4">Upload Images</h1>
+            <div className="bg-white p-6 rounded-lg shadow-md">
+                <label className="block mb-4">
                     <input
                         type="file"
                         accept="image/*"
                         onChange={handleFileUpload}
+                        className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+                        
                     />
-                    Add file
+                    
                 </label>
 
-                <button onClick={startWebcam}>Capture photo using webcam</button>
+                <button onClick={startWebcam} className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+                    Capture photo using webcam
+                </button>
 
                 {isWebcamMode && (
-                    <div>
+                    <div className="mt-4">
                         <Webcam
                             audio={false}
                             height={720}
@@ -106,18 +109,22 @@ const SkinTone = () => {
                             width={1280}
                             videoConstraints={videoConstraints}
                         />
-                        <button onClick={capture}>Capture photo</button>
+                        <button onClick={capture} className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mt-4">
+                            Capture photo
+                        </button>
                     </div>
                 )}
 
                 {preview !== '' && (
-                    <div className="image-preview">
-                        <FaTimes className="deselect-icon" onClick={handleDeselectImage} />
-                        <img src={preview} alt="Selected" />
+                    <div className="mt-4 relative">
+                        <FaTimes className="absolute top-0 right-0 cursor-pointer" onClick={handleDeselectImage} />
+                        <img src={preview} alt="Selected" className="w-full h-auto rounded mt-2" />
                         {isLoading ? (
                             <div>Loading...</div>
                         ) : (
-                            <button onClick={uploadImage}>Upload Image</button>
+                            <button onClick={uploadImage} className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mt-2">
+                                Upload Image
+                            </button>
                         )}
                     </div>
                 )}
