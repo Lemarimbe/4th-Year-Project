@@ -9,6 +9,7 @@ import { Link } from "react-router-dom";
 const NavBar = () => {
  
   const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [userProfilePic, setUserProfilePic] = useState(null);
   useEffect(() => {
     const checkLoginStatus = async () => {
       try {
@@ -20,6 +21,11 @@ const NavBar = () => {
           );
           console.log(response)
           setIsLoggedIn(response.data.loggedIn);
+          if (response.data.loggedIn) {
+            const userDetails = JSON.parse(localStorage.getItem("user"));
+            setUserProfilePic(userDetails.profilePic);
+            
+          }
         } else {
           setIsLoggedIn(false);
         }
@@ -80,6 +86,21 @@ const NavBar = () => {
           </Link>
 
           {isLoggedIn ?  <Link to="/login" className="text-2xl text-right ml-10 relative left-24">LOGOUT</Link> : <Link to="/login" className="text-2xl text-right ml-10 relative left-24">LOGIN</Link>}
+
+          {/* Avatar link to profile page */}
+          {isLoggedIn ? (
+            <Link to="/profile">
+              <img
+                src={userProfilePic}
+                alt="Avatar"
+                className="avatar ml-10 relative left-24 rounded-full w-16 h-16"
+              />
+            </Link>
+          ) : (
+            <Link to="/login" className="text-2xl text-right ml-10 relative left-24">
+              LOGIN
+            </Link>
+          )}
         </nav>
       </header>
     </div>

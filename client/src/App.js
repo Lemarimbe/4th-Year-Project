@@ -25,6 +25,7 @@ import MobileNav from "./components/MobileNav";
 import Login from "./components/Login";
 import SignUp from "./components/SignUp";
 import SkinTone from "./components/SkinTone";
+import ProfilePage from "./components/ProfilePage";
 
 function App() {
   return (
@@ -91,6 +92,14 @@ function App() {
               </>
             }
           />
+          <Route
+            path= "/profile"
+            element={
+              <>
+              <NavBar/> <MobileNav/> <ProfilePage/>
+              </>
+            }
+            />
           <Route
             path="/under20"
             element={

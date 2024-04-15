@@ -55,6 +55,7 @@ async function login(req, res){
    try {
     let user = await getAUser(username, pool)
     console.log(user)
+    req.user = user
 
     if(user){
         let passwords_match = await bcrypt.compare(password, user.password)
@@ -65,6 +66,7 @@ async function login(req, res){
                 success: true,
                 message: "Login successful",
                 token,
+                user: user
               });
         } else{
             res.status(401).send({

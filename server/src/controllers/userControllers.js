@@ -117,6 +117,52 @@ async function getProductsByBrand(req, res) {
     }
 }
 
+async function editUserDetails(req, res) {
+    let { pool } = req;
+    const userId = req.user.user.user_id;
+
+    const {
+        username,
+        email,
+        password,
+        name,
+        profilePic,
+        skinTone
+    } = req.body;
+
+    try {
+        const result = await pool.request()
+            .input('userId', userId)
+            .input('newUsername', username)
+            .input('newEmail', email)
+            .input('newPassword', password)
+            .input('newName', name)
+            .input('newProfilePic', profilePic)
+            .input('newSkinTone', skinTone)
+            .execute('editUser');
+
+        console.log(result)
+        if (result.rowsAffected[0] > 0) {
+            res.status(200).send({
+                success: true,
+                message: 'User details updated successfully'
+            });
+        } else {
+            res.status(404).send({
+                success: false,
+                message: 'User not found or unable to update details'
+            });
+        }
+    } catch (error) {
+        res.status(500).send({
+            success: false,
+            message: 'An error occurred while updating user details',
+            error: error.message
+        });
+    }
+}
+
+
 async function searchProductsByName(req, res) {
     let { pool } = req
     const product_name = req.params.term;
@@ -238,13 +284,18 @@ async function getSkintone(req, res) {
         }
         
     } else {
-        res.json({
-            success: false
+        res.status(500).json({
+            success: false,
+            message: "Upload another image"
         })
     }
    
     } catch (error) {
-        res.send(error)
+        res.status(500).json({
+            success: false,
+            error: error
+        
+        })
     }
         
 
@@ -293,5 +344,6 @@ module.exports = {
     searchProductsByName,
     recommendProductsBySkinTone,
     getSkintone,
-    checkLogin
+    checkLogin,
+    editUserDetails
 }

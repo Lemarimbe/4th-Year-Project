@@ -21,8 +21,10 @@ const Login = () => {
             }, {
                 withCredentials: true
             });
+            console.log(response.data)
             const token = response.data.token;
             localStorage.setItem("token", token);
+            localStorage.setItem("user", JSON.stringify(response.data.user));
             navigate("/");
         } catch (error) {
             console.error("Login failed:", error);
